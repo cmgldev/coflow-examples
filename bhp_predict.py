@@ -6,7 +6,7 @@ import coflow
 # A local file called bhp_predict.ini contains the
 # bootstrapping information need to run the model
 config = configparser.ConfigParser()
-config.read("bhp_predict.ini")
+config.read("bhp_predict.txt")
 service = config["service"]
 tenant_url = service["tenant_url"]
 project = service["project"]

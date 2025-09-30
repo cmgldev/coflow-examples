@@ -1,12 +1,17 @@
-import coflow
+import configparser
 import os
 
-# Adjust these depending on the tenant, project, release
-# and model path
-tenant_url = ""
-project = ""
-release = ""
-model_path = ""
+import coflow
+
+# A local file called bhp_predict.ini contains the
+# bootstrapping information need to run the model
+config = configparser.ConfigParser()
+config.read("bhp_predict.ini")
+service = config["service"]
+tenant_url = service["tenant_url"]
+project = service["project"]
+release = service["release"]
+model_path = service["model_path"]
 
 # Obtain a CoFlow API key from your tenant landing page
 # Login here and select click the "Create Token" button. By default, tokens
@@ -71,4 +76,4 @@ input = {
 }
 
 output = model.run(input)
-print(input["bhp"])
+print(f"Predicted BHP: {output['bhp']:.2f} psi")

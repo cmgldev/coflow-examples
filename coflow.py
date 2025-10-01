@@ -203,7 +203,8 @@ class CoFlow:
             session_url, json=init_request, headers=headers
         )
         debug_print(response.status_code)
-        if response.status_code != requests.codes.CREATED:  # 201
+        if response.status_code != requests.codes.CREATED:
+            self._close_state_state_session(session_url)  # 201
             debug_print(response)
             raise SessionError(
                 f"Failed to initialize steady state model: {lookup_status_code(response.status_code)}"
@@ -262,6 +263,15 @@ class CoFlow:
                 f"{response.text}: {lookup_status_code(response.status_code)}"
             )
         print("Steady State session closed.")
+
+    def _close_state_state_session(self, session_url):
+        headers: dict = {"Authorization": f"Bearer {self.api_key}"}
+        response: requests.Response = requests.delete(
+            session_url,
+            headers=headers
+        )
+        if response.status_code != response.codes.OK:
+            print(response)
 
 
 class SteadyStateModel:

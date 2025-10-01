@@ -8,10 +8,10 @@ import coflow
 config = configparser.ConfigParser()
 config.read("bhp_predict.txt")
 service = config["service"]
-tenant_url = service["tenant_url"]
-project = service["project"]
-release = service["release"]
-model_path = service["model_path"]
+tenant_url = service["tenant_url"].strip('"\'')
+project = service["project"].strip('"\'')
+release = service["release"].strip('"\'')
+model_path = service["model_path"].strip('"\'')
 
 # Obtain a CoFlow API key from your tenant landing page
 # Login here and select click the "Create Token" button. By default, tokens
